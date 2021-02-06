@@ -18,14 +18,13 @@
 # device-specific aspects (drivers) with a device-agnostic
 # product configuration (apps).
 #
-
-# Target headers include dir
-TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
-
 # Device Namespaces
 DEVICE_PATH := device/motorola/def
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 PRODUCT_SOONG_NAMESPACES += vendor/motorola/def
+
+# Target headers include dir
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
 # Generic AOSP image always requires separate vendor.img
 TARGET_COPY_OUT_VENDOR := vendor
@@ -35,7 +34,7 @@ include $(DEVICE_PATH)/BoardConfigGsi.mk
 
 # Bootloader / recovery flags
 TARGET_NO_BOOTLOADER := true
-TARGET_NO_RECOVERY := false
+TARGET_NO_RECOVERY := true
 
 # Device Specifics
 TARGET_OTA_ASSERT_DEVICE := MotoOneHyper
@@ -79,7 +78,7 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.hardware=qcom androidboot.console=ttyMSM0 androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 androidboot.usbcontroller=a600000.dwc3 earlycon=msm_geni_serial,0x880000 loop.max_part=7 printk.devkmsg=on firmware_class.path=/vendor/firmware_mnt/image
 
 # Clang-llvm
-TARGET_KERNEL_CLANG_COMPILE := true
+#TARGET_KERNEL_CLANG_COMPILE := true
 NEED_KERNEL_MODULE_VENDOR_OVERLAY := true
  
 # Firmware Images
