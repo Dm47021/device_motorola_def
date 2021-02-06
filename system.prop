@@ -147,7 +147,7 @@ ro.mot.build.version.sdk_int=30
 ro.mot.build.product.increment=1
 ro.mot.build.version.release=30.1
 ro.treble.enabled=true
-net.bt.name=Android
+net.bt.name=MotoOneHyper
 ro.vendor.qti.va_aosp.support=1
 
 persist.dbg.ims_volte_enable=1

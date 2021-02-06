@@ -19,19 +19,21 @@
 # product configuration (apps).
 #
 
-VENDOR_EXCEPTION_PATHS := omni \
+VENDOR_EXCEPTION_PATHS := lineage \
     motorola \
     gapps
+    
+DISABLE_ARTIFACT_PATH_REQUIREMENTS := true
 
 # Sample: This is where we'd set a backup provider if we had one
 # $(call inherit-product, device/sample/products/backup_overlay.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 
 # Get the prebuilt list of APNs
-$(call inherit-product, vendor/omni/config/gsm.mk)
+$(call inherit-product, vendor/lineage/config/common.mk)
 
 # Inherit from the common Open Source product configuration
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, vendor/lineage/config//common_full_phone.mk)
 
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_BUILD_SUPER_PARTITION := false
@@ -73,10 +75,10 @@ TARGET_BOOTANIMATION_SIZE := 1080p
 AB_OTA_UPDATER := true
 
 DEVICE_PACKAGE_OVERLAYS += device/motorola/def/overlay/device
-DEVICE_PACKAGE_OVERLAYS += vendor/omni/overlay/CarrierConfig
+DEVICE_PACKAGE_OVERLAYS += vendor/lineage/overlay/CarrierConfig
 
 # Inherit from our custom product configuration
-$(call inherit-product, vendor/omni/config/common.mk)
+$(call inherit-product, vendor/lineage/config/common.mk)
 
 # get the rest of aosp stuff after ours
 $(call inherit-product, $(SRC_TARGET_DIR)/product/mainline_system_arm64.mk)
@@ -87,7 +89,7 @@ $(call inherit-product, device/motorola/def/device.mk)
 PRODUCT_SHIPPING_API_LEVEL := 29
 
 # Discard inherited values and use our own instead.
-PRODUCT_NAME := omni_def
+PRODUCT_NAME := lineage_def
 PRODUCT_DEVICE := def
 PRODUCT_BRAND := motorola
 PRODUCT_MANUFACTURER := motorola
@@ -107,4 +109,4 @@ TARGET_VENDOR := motorola
 
 $(call inherit-product, vendor/motorola/def/def-vendor.mk)
 
-$(call inherit-product, vendor/gapps/config.mk)
+$(call inherit-product-if-exists, vendor/gapps/gapps.mk)

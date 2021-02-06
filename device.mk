@@ -19,15 +19,17 @@
 # device-specific aspects (drivers) with a device-agnostic
 # product configuration (apps).
 #
+
+# Handle Artifacts in system
+DISABLE_ARTIFACT_PATH_REQUIREMENTS := true
+
 PRODUCT_PACKAGES += com.android.apex.cts.shim.v1_prebuilt
 TARGET_FLATTEN_APEX := false
 
 # Prebuilt
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,device/motorola/def/prebuilt/product,product) \
-    $(call find-copy-subdir-files,*,device/motorola/def/prebuilt/root,recovery/root) \
     $(call find-copy-subdir-files,*,device/motorola/def/prebuilt/permissions,product/etc/permissions) \
-    $(call find-copy-subdir-files,*,device/motorola/def/prebuilt/system,system) \
     $(call find-copy-subdir-files,*,device/motorola/def/prebuilt/permissions,system/etc/permissions)
 
 PRODUCT_PACKAGES += fstab.qcom
@@ -55,27 +57,26 @@ AB_OTA_POSTINSTALL_CONFIG += \
 PRODUCT_PACKAGES += \
     otapreopt_script \
     update_engine \
+    update_engine_client \
     update_engine_sideload \
     update_verifier
 
 PRODUCT_HOST_PACKAGES += \
     brillo_update_payload
 
-# Boot control
-PRODUCT_PACKAGES_DEBUG += \
-    bootctl
-
-# Boot control
+# Bootctrl.$(TARGET_BOARD_PLATFORM) is bootctrl HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.0-impl.recovery \
-    bootctrl.sm6150.recovery \
-    fastbootd
+    android.hardware.boot@1.0-service \
+    bootctrl.qcom \
+    bootctrl.qcom.recovery
 
-PRODUCT_PACKAGES_DEBUG += \
-    update_engine_client
-
+# Fastboot    
 PRODUCT_PACKAGES += \
-    omni_charger_res_images \
+    fastbootd
+    
+PRODUCT_PACKAGES += \
+    lineage_charger_res_images \
     animation.txt \
     font_charger.png
 
@@ -168,17 +169,10 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.wifi@1.0
-#    android.hardware.vibrator@1.2-service.oneplus7pro
 
 # Remove unwanted packages
 PRODUCT_PACKAGES += \
     RemovePackages
-
-#PRODUCT_BOOT_JARS += \
-#    com.nxp.nfc \
-#    tcmiface \
-#    WfdCommon \
-#    qcnvitems
 
 # Video seccomp policy files
 PRODUCT_COPY_FILES += \
